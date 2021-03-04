@@ -12,7 +12,7 @@ Signature: Andrew Kim
 
 #include <SFML/Graphics.hpp>
 
-void line(sf::RenderWindow&, const int, const int, int&, int&);
+void drawLine(sf::RenderWindow&, const int, const int, int&, int&);
 
 
 int main()
@@ -47,7 +47,7 @@ int main()
         }
 
         // Create line and set at midpoint
-        line(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor);
+        drawLine(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor);
         /*
         sf::Vertex line[] =
         {
@@ -96,7 +96,7 @@ int main()
 
 
 // Comment goes here
-void line(sf::RenderWindow& window, const int WINDOW_WIDTH, 
+void drawLine(sf::RenderWindow& window, const int WINDOW_WIDTH, 
     const int WINDOW_HEIGHT, int& lineHeight, int& divisor)
 {
     // Create line and set at midpoint
@@ -105,5 +105,5 @@ void line(sf::RenderWindow& window, const int WINDOW_WIDTH,
         sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, 0), sf::Color::Black),
         sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, lineHeight / divisor), sf::Color::Black)
     };
-    window.draw(line, 2, sf::Lines);
+    window.draw(line, 2, sf::Lines); // Draw line
 }
