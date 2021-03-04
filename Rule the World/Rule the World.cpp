@@ -12,13 +12,13 @@ Signature: Andrew Kim
 
 #include <SFML/Graphics.hpp>
 
-void drawLines(sf::RenderWindow&, const int, const int, int);
+void drawLines(sf::RenderWindow&, const int, const int);
+int findPrecision(int);
 
 
 int main()
 {
     const int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 100; // Size at launch
-    int maxDivisor = 16; // Precision of ruler
 
     // Setup window
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), 
@@ -42,7 +42,7 @@ int main()
         window.clear();
 
         window.draw(ruler); // Draw ruler background
-        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, maxDivisor);
+        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         window.display();
     }
@@ -53,12 +53,12 @@ int main()
 
 // Draw lines on ruler
 void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH, 
-    const int WINDOW_HEIGHT, int maxDivisor)
+    const int WINDOW_HEIGHT)
 {
-    int divisor = 1, // Initial divisor
-        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
+    int divisor = 1, maxDivisor = findPrecision(window.getSize().x);
+    double lineHeight = WINDOW_HEIGHT * 0.9; // Biggest line is 90% of window
 
-    while (divisor <= maxDivisor)
+    while (divisor <= (maxDivisor / 2))
     {
         // Iterate through each possible line with divisor
         for (int i = 1; i <= (divisor * 2); i++)
@@ -81,4 +81,11 @@ void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH,
         divisor *= 2; // Increase divisor
         lineHeight *= 0.75; // Adjust height of lines
     }
+}
+
+
+// Return the greatest precision value that's visually appealing
+int findPrecision(int currentWidth)
+{
+    return (int) (currentWidth / 30);
 }
