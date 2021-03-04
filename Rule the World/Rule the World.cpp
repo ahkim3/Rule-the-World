@@ -12,7 +12,7 @@ Signature: Andrew Kim
 
 #include <SFML/Graphics.hpp>
 
-void drawLine(sf::RenderWindow&, const int, const int, int&, int&);
+void drawLines(sf::RenderWindow&, const int, const int, int&, int&);
 
 
 int main()
@@ -47,7 +47,7 @@ int main()
         }
 
         // Create line and set at midpoint
-        drawLine(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor);
+        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor);
         /*
         sf::Vertex line[] =
         {
@@ -59,15 +59,17 @@ int main()
         divisor *= 2;
 
         // Create a line at each fraction
-        for (int i = 1; i <= (divisor * 2); i++)
+        /*
+        for (int i = 1; i <= (8); i++)
         {
             sf::Vertex lineFraction[] =
             {
-                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 4, 0), sf::Color::Black),
-                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 4, lineHeight / divisor), sf::Color::Black)
+                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 8, 0), sf::Color::Black),
+                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 8, lineHeight / divisor), sf::Color::Black)
             };
             window.draw(lineFraction, 2, sf::Lines);
         }
+        */
         /*
         sf::Vertex lineTwo[] =
         {
@@ -95,15 +97,27 @@ int main()
 }
 
 
-// Comment goes here
-void drawLine(sf::RenderWindow& window, const int WINDOW_WIDTH, 
+// Draw lines on ruler
+void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH, 
     const int WINDOW_HEIGHT, int& lineHeight, int& divisor)
 {
-    // Create line and set at midpoint
-    sf::Vertex line[] =
+    while (divisor <= 16)
     {
-        sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, 0), sf::Color::Black),
-        sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, lineHeight / divisor), sf::Color::Black)
-    };
-    window.draw(line, 2, sf::Lines); // Draw line
+        // Iterate through each possible line with divisor
+        for (int i = 1; i <= (divisor * 2); i++)
+        {
+            // Check if divisible to prevent duplicate lines from being drawn
+            if ((i % divisor) != 0 || (i == 1))
+            {
+                // Create line and set at midpoint
+                sf::Vertex line[] =
+                {
+                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2), 0), sf::Color::Black),
+                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2), lineHeight / divisor), sf::Color::Black)
+                };
+                window.draw(line, 2, sf::Lines); // Draw line
+            }
+        }
+        divisor *= 2;
+    }
 }
