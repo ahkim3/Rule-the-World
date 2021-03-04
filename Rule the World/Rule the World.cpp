@@ -12,13 +12,13 @@ Signature: Andrew Kim
 
 #include <SFML/Graphics.hpp>
 
-void drawLines(sf::RenderWindow&, const int, const int, int&, int&, int);
+void drawLines(sf::RenderWindow&, const int, const int, int);
 
 
 int main()
 {
     const int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 100; // Size at launch
-    int divisor, lineHeight, maxDivisor = 16; // Precision of ruler
+    int maxDivisor = 16; // Precision of ruler
 
     // Setup window
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), 
@@ -39,14 +39,10 @@ int main()
                 window.close();
         }
 
-        // Draw ruler background
         window.clear();
-        window.draw(ruler);
 
-        divisor = 1; // Reset initial divisor
-        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
-
-        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor, maxDivisor);
+        window.draw(ruler); // Draw ruler background
+        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, maxDivisor);
 
         window.display();
     }
@@ -57,9 +53,12 @@ int main()
 
 // Draw lines on ruler
 void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH, 
-    const int WINDOW_HEIGHT, int& lineHeight, int& divisor, int maxDivisor)
+    const int WINDOW_HEIGHT, int maxDivisor)
 {
-    while (divisor <= 16)
+    int divisor = 1, // Initial divisor
+        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
+
+    while (divisor <= maxDivisor)
     {
         // Iterate through each possible line with divisor
         for (int i = 1; i <= (divisor * 2); i++)
