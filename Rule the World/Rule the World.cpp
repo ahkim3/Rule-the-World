@@ -32,13 +32,6 @@ int main()
     {
         sf::Event event;
 
-        // Draw ruler background
-        window.clear();
-        window.draw(ruler);
-
-        divisor = 1; // Reset initial divisor
-        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
-
         // Close window
         while (window.pollEvent(event))
         {
@@ -46,50 +39,15 @@ int main()
                 window.close();
         }
 
-        // Create line and set at midpoint
+        // Draw ruler background
+        window.clear();
+        window.draw(ruler);
+
+        divisor = 1; // Reset initial divisor
+        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
+
         drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor, maxDivisor);
-        /*
-        sf::Vertex line[] =
-        {
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, 0), sf::Color::Black),
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, lineHeight / divisor), sf::Color::Black)
-        };
-        window.draw(line, 2, sf::Lines);*/
 
-        divisor *= 2;
-
-        // Create a line at each fraction
-        /*
-        for (int i = 1; i <= (8); i++)
-        {
-            sf::Vertex lineFraction[] =
-            {
-                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 8, 0), sf::Color::Black),
-                sf::Vertex(sf::Vector2f(WINDOW_WIDTH * i / 8, lineHeight / divisor), sf::Color::Black)
-            };
-            window.draw(lineFraction, 2, sf::Lines);
-        }
-        */
-        /*
-        sf::Vertex lineTwo[] =
-        {
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH * 1 / 4, 0), sf::Color::Black),
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH * 1 / 4, lineHeight / divisor), sf::Color::Black)
-        };
-        window.draw(lineTwo, 2, sf::Lines);
-
-
-        sf::Vertex lineThree[] =
-        {
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH * 3 / 4, 0), sf::Color::Black),
-            sf::Vertex(sf::Vector2f(WINDOW_WIDTH * 3 / 4, lineHeight / divisor), sf::Color::Black)
-        };
-
-        window.draw(lineThree, 2, sf::Lines);
-        */
-
-
-        //window.draw(line, 2, sf::Lines);
         window.display();
     }
 
