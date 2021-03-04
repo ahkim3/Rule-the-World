@@ -13,7 +13,7 @@ Signature: Andrew Kim
 #include <SFML/Graphics.hpp>
 
 void drawLines(sf::RenderWindow&, const int, const int);
-int findPrecision(int);
+int findPrecision(const int);
 
 
 int main()
@@ -58,9 +58,10 @@ void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH,
     int divisor = 1, maxDivisor = findPrecision(window.getSize().x);
     double lineHeight = WINDOW_HEIGHT * 0.9; // Biggest line is 90% of window
 
+    // Iterate through each divisor
     while (divisor <= (maxDivisor / 2))
     {
-        // Iterate through each possible line with divisor
+        // Iterate through each possible line with specified divisor
         for (int i = 1; i <= (divisor * 2); i++)
         {
             // Check if divisible to prevent duplicate lines from being drawn
@@ -85,7 +86,7 @@ void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH,
 
 
 // Return the greatest precision value that's visually appealing
-int findPrecision(int currentWidth)
+int findPrecision(const int currentWidth)
 {
     return (int) (currentWidth / 30);
 }
