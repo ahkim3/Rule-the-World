@@ -85,7 +85,8 @@ void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH,
 }
 
 
-// Return the greatest precision value that's visually appealing
+// Return the greatest ruler precision value that's visually appealing when
+// user resizes window
 int findPrecision(const int currentWidth)
 {
     return (int) (currentWidth / 29);
