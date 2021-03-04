@@ -12,14 +12,13 @@ Signature: Andrew Kim
 
 #include <SFML/Graphics.hpp>
 
-void drawLines(sf::RenderWindow&, const int, const int, int&, int&);
+void drawLines(sf::RenderWindow&, const int, const int, int&, int&, int);
 
 
 int main()
 {
     const int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 100; // Size at launch
-    int divisor, 
-        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
+    int divisor, lineHeight, maxDivisor = 16; // Precision of ruler
 
     // Setup window
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), 
@@ -38,6 +37,7 @@ int main()
         window.draw(ruler);
 
         divisor = 1; // Reset initial divisor
+        lineHeight = WINDOW_HEIGHT / 10 * 9; // Biggest line is 90% of window
 
         // Close window
         while (window.pollEvent(event))
@@ -47,7 +47,7 @@ int main()
         }
 
         // Create line and set at midpoint
-        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor);
+        drawLines(window, WINDOW_WIDTH, WINDOW_HEIGHT, lineHeight, divisor, maxDivisor);
         /*
         sf::Vertex line[] =
         {
@@ -99,7 +99,7 @@ int main()
 
 // Draw lines on ruler
 void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH, 
-    const int WINDOW_HEIGHT, int& lineHeight, int& divisor)
+    const int WINDOW_HEIGHT, int& lineHeight, int& divisor, int maxDivisor)
 {
     while (divisor <= 16)
     {
@@ -112,12 +112,16 @@ void drawLines(sf::RenderWindow& window, const int WINDOW_WIDTH,
                 // Create line and set at midpoint
                 sf::Vertex line[] =
                 {
-                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2), 0), sf::Color::Black),
-                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2), lineHeight / divisor), sf::Color::Black)
+                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2),
+                        0), sf::Color::Black),
+                    sf::Vertex(sf::Vector2f((WINDOW_WIDTH * i) / (divisor * 2),
+                        lineHeight), sf::Color::Black)
                 };
                 window.draw(line, 2, sf::Lines); // Draw line
             }
         }
-        divisor *= 2;
+
+        divisor *= 2; // Increase divisor
+        lineHeight *= 0.75; // Adjust height of lines
     }
 }
