@@ -4,7 +4,7 @@
 
 ## Prompt
 
-![Rule the World Prompt](https://github.com/ahkim3/Curved-Lab/blob/main/Rule%20the%20World%20Prompt.png?raw=true "Prompt")
+![Rule the World Prompt](https://github.com/ahkim3/Rule-the-World/blob/main/Rule%20the%20World%20Prompt.png?raw=true "Prompt")
 
 ## Requirements
 - Please ensure SFML is installed to run this program.
